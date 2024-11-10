@@ -1,11 +1,15 @@
-const express = require("express");
+import express from 'express';
+import { createPost, updatePost, deletePost, getPost } from './controller/postController.js';
+import authenticateToken from '../auth/authMiddleware.js';
+
 const router = express.Router();
-const postController = require("./controller/postController");
 
-// 게시물 작성
-router.post("/", postController.createPost);
+// 게시글 작성, 수정, 삭제 시 인증 필요
+router.post('/write', authenticateToken, createPost);
+router.put('/:postId', authenticateToken, updatePost);
+router.delete('/:postId', authenticateToken, deletePost);
 
-// 게시물 조회
-router.get("/:postId", postController.getPost);
+// 게시글 조회는 인증 불필요
+router.get('/:postId', getPost);
 
-module.exports = router;
+export default router;

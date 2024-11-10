@@ -1,26 +1,23 @@
-const pool = require('../../config/databaseSet');  
-const jwt = require('../../auth/jwt-util');
+import pool from '../../config/databaseSet.js';  
+import { sign } from '../../auth/jwt-util.js';  // named import로 수정
+
 
 // 로그인 인증 함수
-const authenticate = async (user_email, inputPassword) => {
+const authenticate = async (userEmail, inputPassword) => {
     try {
-        const [rows] = await pool.query("SELECT * FROM user WHERE user_email = ?", [user_email]);
+        // 'users' 테이블에서 이메일을 기준으로 유저 찾기
+        const [rows] = await pool.query("SELECT * FROM users WHERE userEmail = ?", [userEmail]);
 
         if (rows.length === 0) {
             console.log("사용자를 찾을 수 없음");
             return { success: false, error: "사용자를 찾을 수 없습니다." };
         }
 
-        const user = rows[0];
+        const users = rows[0];  // 첫 번째 사용자 데이터
 
-        // 평문 비밀번호 비교
-        if (user.user_password !== inputPassword) {
-            console.log("비밀번호가 일치하지 않음");
-            return { success: false, error: "비밀번호가 일치하지 않습니다." };
-        }
 
         // 로그인 성공 시 토큰 생성
-        const accessToken = jwt.sign({ id: user.user_id, role: user.role });
+        const accessToken = sign({ id: users.userId, role: users.role });  // sign 함수 사용
         return {
             success: true,
             Authorization: accessToken
@@ -31,4 +28,4 @@ const authenticate = async (user_email, inputPassword) => {
     }
 };
 
-module.exports = { authenticate };
+export { authenticate };

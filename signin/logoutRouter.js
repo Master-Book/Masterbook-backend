@@ -1,9 +1,10 @@
+import express from 'express';
+import { logout } from './controller/logoutController.js'; // .js 확장자 추가
 
-const express = require("express");
+
 const router = express.Router();
-const logoutController = require("./controller/logoutController");
 
-router.post("/", logoutController.logout);
+// 로그아웃 처리
+router.post("/", logout);
 
-module.exports = router;
-            
+export default router;

@@ -1,8 +1,9 @@
-const express = require("express");
+import express from 'express';
+import { getPostsByGame } from './channelPageController.js';
+
 const router = express.Router();
-const channelPageController = require("./channelPageController");
 
 // 특정 게임의 채널 내 게시물 가져오기
-router.get("/:gameName", channelPageController.getPostsByGame);
+router.get("/:gameName", getPostsByGame);
 
-module.exports = router;
+export default router;

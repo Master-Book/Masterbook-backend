@@ -1,52 +1,70 @@
-const db = require('../../config/databaseSet');
+import pool from '../../config/databaseSet.js';
 
-// 게시물 작성
-async function createPost({ gameName, characterName, title, authorId, content }) {
-    try {
-        const [result] = await db.query(`
-            INSERT INTO posts (gameName, characterName, title, authorId, content, date)
-            VALUES (?, ?, ?, ?, ?, NOW())
-        `, [gameName, characterName, title, authorId, content]);
-        return { postId: result.insertId, gameName, characterName, title, authorId, content };
-    } catch (error) {
-        throw new Error('Failed to create post');
+// 사용자의 userId를 가져오는 함수
+export const getUserByNickname = async (nickname) => {
+  try {
+    const [rows] = await pool.query('SELECT userId FROM users WHERE nickname = ?', [nickname]);
+    if (rows.length === 0) {
+      throw new Error('User not found');
     }
-}
+    return rows; // 사용자 정보를 반환
+  } catch (error) {
+    throw new Error('Error retrieving user by nickname: ' + error.message);
+  }
+};
 
-// 게시물 ID로 게시물 조회
-async function getPostById(postId) {
-    try {
-        const [rows] = await db.query(`
-            SELECT * FROM posts WHERE postId = ?
-        `, [postId]);
-        return rows[0];
-    } catch (error) {
-        throw new Error('Failed to fetch post by ID');
+// 게시글 생성 함수
+export const createPost = async (title, authorId, author, content, gameId, characterId) => {
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO posts (title, author, authorId, content, date, gameId, characterId) VALUES (?, ?, ?, ?, NOW(), ?, ?)',
+      [title, author, authorId, content, gameId, characterId]
+    );
+    return result.insertId; // 생성된 게시글 ID 반환
+  } catch (error) {
+    throw new Error('Error creating post: ' + error.message);
+  }
+};
+
+// 게시글 수정 함수
+export const updatePost = async (postId, title, authorId, author, content, gameId, characterId) => {
+  try {
+    await pool.query(
+      'UPDATE posts SET title = ?, author = ?, authorId = ?, content = ?, gameId = ?, characterId = ? WHERE postId = ?',
+      [title, author, authorId, content, gameId, characterId, postId]
+    );
+  } catch (error) {
+    throw new Error('Error updating post: ' + error.message);
+  }
+};
+
+// 게시글 조회 함수
+export const getPost = async (postId) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM posts WHERE postId = ?', [postId]);
+    if (rows.length === 0) {
+      throw new Error('Post not found');
     }
-}
+    return rows[0]; // 게시글 정보 반환
+  } catch (error) {
+    throw new Error('Error retrieving post: ' + error.message);
+  }
+};
 
-// 최신 게시물 5개 조회
-async function getLatestPosts() {
-    try {
-        const [rows] = await db.query(`
-            SELECT * FROM posts ORDER BY date DESC LIMIT 5
-        `);
-        return rows;
-    } catch (error) {
-        throw new Error('Failed to fetch latest posts');
-    }
-}
+// 게시글 삭제 함수
+export const deletePost = async (postId) => {
+  try {
+    await pool.query('DELETE FROM posts WHERE postId = ?', [postId]);
+  } catch (error) {
+    throw new Error('Error deleting post: ' + error.message);
+  }
+};
 
-// 인기 게시물 5개 조회
-async function getPopularPosts() {
-    try {
-        const [rows] = await db.query(`
-            SELECT * FROM posts ORDER BY views DESC LIMIT 5
-        `);
-        return rows;
-    } catch (error) {
-        throw new Error('Failed to fetch popular posts');
-    }
-}
-
-module.exports = { createPost, getPostById, getLatestPosts, getPopularPosts };
+// 모든 함수들을 객체로 내보냄
+export default {
+  getUserByNickname,
+  createPost,
+  updatePost,
+  getPost,
+  deletePost
+};

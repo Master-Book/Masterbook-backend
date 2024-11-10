@@ -1,4 +1,4 @@
-const db = require("../config/databaseSet");
+import db from '../config/databaseSet.js';
 
 // 특정 게임의 게시물 목록 가져오기
 async function fetchPostsByGame(gameName) {
@@ -12,4 +12,4 @@ async function fetchPostsByGame(gameName) {
     }
 }
 
-module.exports = { fetchPostsByGame };
+export { fetchPostsByGame };

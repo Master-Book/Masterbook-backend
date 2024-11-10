@@ -1,4 +1,4 @@
-const db = require("../config/databaseSet");
+import db from '../config/databaseSet.js';
 
 // 최신 글 5개 가져오기
 async function fetchLatestPosts() {
@@ -16,7 +16,7 @@ async function fetchLatestPosts() {
 async function fetchPopularPosts() {
     try {
         const [rows] = await db.query(`
-            SELECT * FROM posts ORDER BY views DESC LIMIT 5
+            SELECT * FROM posts ORDER BY view DESC LIMIT 5
         `);
         return rows;
     } catch (error) {
@@ -24,4 +24,4 @@ async function fetchPopularPosts() {
     }
 }
 
-module.exports = { fetchLatestPosts, fetchPopularPosts };
+export { fetchLatestPosts, fetchPopularPosts };

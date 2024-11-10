@@ -1,6 +1,6 @@
-const mysql = require('mysql2');
-require('dotenv').config(); // .env 파일 로드
-
+import mysql from 'mysql2';
+import dotenv from 'dotenv'; // .env 파일 로드
+dotenv.config();
 
 // createPool()로 연결 풀을 만들고 promise() 메서드를 호출해 promise API로 변경
 const pool = mysql.createPool({
@@ -11,18 +11,16 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME
 }).promise();  // promise() 메서드 호출
 
-
-
-// 쿼리 실행 예시 (비동기 방식으로)
-async function testQuery() {
-  try {
-    const [rows] = await pool.query('SELECT * FROM user');
-    console.log('쿼리 결과:', rows);
-  } catch (err) {
-    console.error("쿼리 실행 오류:", err);
-  }
+// DB 연결 확인용 코드
+async function testDBConnection() {
+    try {
+        const [rows] = await pool.query("SELECT 1");
+        console.log("Database connection successful", rows);
+    } catch (error) {
+        console.error("Error connecting to database", error);
+    }
 }
 
-testQuery();
+testDBConnection();
 
-module.exports = pool;
+export default pool;  // ES 모듈 방식으로 내보내기

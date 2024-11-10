@@ -1,11 +1,13 @@
-const express = require("express");
+import express from 'express';
+import { getLatestPosts, getPopularPosts } from './mainPageController.js';
+import authenticateToken from '../auth/authMiddleware.js'; // JWT 인증 미들웨어 추가
+
 const router = express.Router();
-const mainPageController = require("./mainPageController");
 
-// 최신 글 목록 가져오기
-router.get("/latest", mainPageController.getLatestPosts);
+// 최신 글 목록 가져오기 (JWT 인증 필요)
+router.get('/latest', authenticateToken, getLatestPosts);
 
-// 인기 글 목록 가져오기
-router.get("/popular", mainPageController.getPopularPosts);
+// 인기 글 목록 가져오기 (JWT 인증 필요)
+router.get('/popular', authenticateToken, getPopularPosts);
 
-module.exports = router;
+export default router;

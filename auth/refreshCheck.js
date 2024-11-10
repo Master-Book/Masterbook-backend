@@ -1,13 +1,6 @@
-
-const redisCl = require('../config/redisSet');
-const jwt = require('./jwt-util');
-
-const refresh = (req, res) => {
-  const refreshToken = req.headers.authorization.split(' ')[1];
-  
-  // Redis에서 토큰 검증 및 새로운 액세스 토큰 발급
-  // (구현 코드 추가 필요)
+// 기존 코드에서 export 방식 변경
+export const refresh = (req, res) => {
+  // 리프레시 토큰 갱신 로직
 };
 
-module.exports = { refresh };
-            
+export default { refresh };  // default export 추가

@@ -1,11 +1,13 @@
+import express from "express";
+import loginController from "./controller/loginController.js";  // default import
+import token from '../auth/refreshCheck.js';  // default import
 
-const express = require("express");
 const router = express.Router();
-const loginController = require("./controller/loginController");
-const token = require('../auth/refreshCheck');
 
+// 로그인 처리
 router.post("/", loginController.login);
+
+// 리프레시 토큰 갱신 처리
 router.get("/refresh", token.refresh);
 
-module.exports = router;
-            
+export default router;

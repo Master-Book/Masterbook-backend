@@ -1,10 +1,9 @@
+import redis from 'redis';
 
-const redis = require('redis');
-const client = redis.createClient();
+const redisCl = redis.createClient();
 
-client.on("error", (error) => {
-  console.error(`Redis error: ${error}`);
+redisCl.on('error', (err) => {
+  console.error('Redis error:', err);
 });
 
-module.exports = client;
-            
+export default redisCl;
