@@ -6,7 +6,7 @@ export const generateGuide = async () => {
   const data = {
     model: 'llama2',
     messages: [
-      { role: 'user', content: '롤 공략을 만들어줘' }
+      { role: 'user', content: '리그오브레전드 공략을 만들어줘' }
     ]
   };
 
@@ -28,11 +28,11 @@ export const saveGuideToDB = async (guideContent) => {
   try {
     const [result] = await pool.query(query, [
       '롤 공략', // title
-      1,         // authorId (예시)
+      1,         // authorId 
       'AI 생성',  // author
       guideContent, // content
-      1,           // gameId (예시)
-      1            // characterId (예시)
+      1,           // gameId 
+      1            // characterId 
     ]);
 
     return {
