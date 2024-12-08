@@ -11,6 +11,7 @@
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.4",
     "openai": "^4.71.1",
-    "redis": "^4.7.0"
+    "redis": "^4.7.0",
+    "rss-parser": "^3.13.0"
   }
 }

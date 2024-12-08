@@ -1,3 +1,4 @@
+// patchNotesService.js
 import axios from 'axios';
 import db from '../config/databaseSet.js';  // 데이터베이스 연결 모듈
 import RSSParser from 'rss-parser';  // RSS 파싱을 위한 패키지
@@ -5,7 +6,7 @@ import RSSParser from 'rss-parser';  // RSS 파싱을 위한 패키지
 const parser = new RSSParser();
 
 // 패치노트 데이터를 가져오고 게시글을 업데이트하는 함수
-export const analyzePatchNotes = async () => {
+const analyzePatchNotes = async () => {
   try {
     // 스타듀 밸리의 RSS 피드에서 패치노트 데이터를 가져옵니다.
     const feed = await parser.parseURL('https://store.steampowered.com/feeds/news/app/413150/');
@@ -37,3 +38,5 @@ const compareWithPatchNotes = (postContent, patchNotes) => {
   // 실제로는 더 정교한 텍스트 분석 또는 NLP 기법을 사용할 수 있습니다.
   return patchNotes.some(patchNote => postContent.includes(patchNote));
 };
+
+export default { analyzePatchNotes };  // default 내보내기

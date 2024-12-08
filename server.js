@@ -9,7 +9,7 @@ import channelPageRouter from "./channelPage/channelPageRouter.js";
 import postRouter from "./post/postRouter.js";
 import guideRoutes from "./AI/guideRoutes.js";
 import signupRouter from "./signup/signupRouter.js";  // 추가된 회원가입 라우터
-import patchnoteRouter from "./router/patchnoteRouter.js";  // 추가된 패치노트 라우터
+import patchnoteRouter from "./patchNote/patchNotesRouter.js";  // 추가된 패치노트 라우터
 import path from "path";
 
 // ES 모듈에서 __dirname을 사용하려면 아래와 같이 설정
