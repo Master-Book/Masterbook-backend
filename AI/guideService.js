@@ -4,9 +4,9 @@ import pool from '../config/databaseSet.js';
 // Ollama API를 통해 공략 내용 생성
 export const generateGuide = async () => {
   const data = {
-    model: 'llama2',
     messages: [
-      { role: 'user', content: '리그오브레전드 공략을 한국어로 만들어줘' } // 한국어로 요청
+      { role: 'system', content: 'AI는 모든 응답을 한국어로 작성해야 합니다.' }, // 시스템 메시지로 언어 설정
+      { role: 'user', content: '리그오브레전드 공략을 한국어로 만들어줘' }
     ]
   };
 

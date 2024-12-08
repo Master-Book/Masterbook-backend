@@ -1,5 +1,5 @@
 import pool from '../../config/databaseSet.js';
-import patchNoteService from '../../patchNote/patchNoteService.js';
+import patchNoteService from '../../patchNote/patchNotesService.js';
 
 // 사용자의 userId를 가져오는 함수
 export const getUserByNickname = async (nickname) => {
