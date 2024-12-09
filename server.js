@@ -10,6 +10,7 @@ import postRouter from "./post/postRouter.js";
 import guideRoutes from "./AI/guideRoutes.js";
 import signupRouter from "./signup/signupRouter.js";  // 추가된 회원가입 라우터
 import patchnoteRouter from "./patchNote/patchNotesRouter.js";  // 추가된 패치노트 라우터
+import commentRouter from "./comment/commentRouter.js"
 import path from "path";
 
 // ES 모듈에서 __dirname을 사용하려면 아래와 같이 설정
@@ -54,6 +55,9 @@ app.use("/api", guideRoutes); // /api/guide 경로에서 사용
 
 // 패치노트 분석 라우터 설정
 app.use("/patchnote", patchnoteRouter); // 패치노트 분석 라우터 추가
+
+// 댓글 라우터 설정
+app.use("/comment", commentRouter);
 
 // React 빌드된 파일 서빙
 app.use(express.static(path.resolve(__dirname, '../MasterBook-FrontEnd/masterbook/build')));
