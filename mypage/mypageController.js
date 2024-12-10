@@ -1,4 +1,21 @@
-import { getPostsByUserId, getCommentsByUserId, getLikesByUserId } from './mypageService.js';
+import { getPostsByUserId, getCommentsByUserId, getLikesByUserId, getUserNickname } from './mypageService.js';
+
+// 사용자 nickname 조회
+export const getNickname = async (req, res) => {
+    try {
+        const userId = req.user.id;  // 인증된 사용자 정보 가져오기
+        console.log('User ID:', userId);  // userId 로그 출력
+        const nickname = await getUserNickname(userId);  // 닉네임 가져오기
+        if (!nickname) {
+            return res.status(404).json({ message: 'Nickname not found' });
+        }
+        res.status(200).json({ nickname });  // 닉네임 반환
+    } catch (error) {
+        console.error('Error fetching nickname:', error);
+        res.status(500).json({ message: 'Error fetching nickname' });
+    }
+};
+
 
 // 게시글 조회
 export const getPosts = async (req, res) => {
