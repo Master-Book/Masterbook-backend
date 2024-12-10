@@ -36,7 +36,7 @@ export const getPost = async (req, res) => {
 
   try {
     const post = await postService.getPost(postId);
-    res.status(200).json(post);
+    res.status(200).json(post); // isAccurate 값도 포함된 게시글 정보 전달
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving post', error: error.message });
   }
@@ -89,5 +89,17 @@ export const getPostLikes = async (req, res) => {
     res.status(200).json({ postId, likeCount });
   } catch (error) {
     res.status(500).json({ message: 'Error retrieving like count', error: error.message });
+  }
+};
+
+// isAccurate 값 조회
+export const getIsAccurate = async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    const isAccurate = await postService.getIsAccurate(postId);
+    res.status(200).json({ isAccurate });
+  } catch (error) {
+    res.status(500).json({ message: 'Error retrieving isAccurate', error: error.message });
   }
 };

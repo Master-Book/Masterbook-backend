@@ -6,7 +6,8 @@ import {
   getPost,
   likePost,
   unlikePost,
-  getPostLikes
+  getPostLikes,
+  getIsAccurate // isAccurate 엔드포인트 추가
 } from './controller/postController.js';
 import authenticateToken from '../auth/authMiddleware.js';
 
@@ -22,5 +23,8 @@ router.get('/:postId', getPost);
 router.post('/:postId/like', authenticateToken, likePost);
 router.delete('/:postId/like', authenticateToken, unlikePost);
 router.get('/:postId/likes', getPostLikes);
+
+// isAccurate 값만 반환하는 엔드포인트 추가
+router.get('/:postId/isAccurate', getIsAccurate);
 
 export default router;

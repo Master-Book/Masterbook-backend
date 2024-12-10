@@ -1,37 +1,37 @@
-import mypageService from './mypageService.js';
+import { getPostsByUserId, getCommentsByUserId, getLikesByUserId } from './mypageService.js';
 
-// 내가 작성한 글 조회
-export const getMyPosts = async (req, res) => {
-  try {
-    const userId = req.user.userId; // 인증 미들웨어에서 추출한 사용자 ID
-    const posts = await mypageService.getMyPosts(userId);
-    res.status(200).json(posts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error retrieving user posts', error: error.message });
-  }
+// 게시글 조회
+export const getPosts = async (req, res) => {
+    try {
+        const userId = req.user.id; // 인증된 사용자 정보 가져오기
+        const posts = await getPostsByUserId(userId); // 서비스 함수 호출
+        res.status(200).json(posts); // 게시글 반환
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ message: 'Error fetching posts' });
+    }
 };
 
-// 내가 작성한 댓글 조회
-export const getMyComments = async (req, res) => {
-  try {
-    const userId = req.user.userId;
-    const comments = await mypageService.getMyComments(userId);
-    res.status(200).json(comments);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error retrieving user comments', error: error.message });
-  }
+// 댓글 조회
+export const getComments = async (req, res) => {
+    try {
+        const userId = req.user.id; // 인증된 사용자 정보 가져오기
+        const comments = await getCommentsByUserId(userId); // 서비스 함수 호출
+        res.status(200).json(comments); // 댓글 반환
+    } catch (error) {
+        console.error('Error fetching comments:', error);
+        res.status(500).json({ message: 'Error fetching comments' });
+    }
 };
 
-// 내가 좋아요 누른 글 조회
-export const getMyLikedPosts = async (req, res) => {
-  try {
-    const userId = req.user.userId;
-    const likedPosts = await mypageService.getMyLikedPosts(userId);
-    res.status(200).json(likedPosts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error retrieving liked posts', error: error.message });
-  }
+// 좋아요 항목 조회
+export const getLikes = async (req, res) => {
+    try {
+        const userId = req.user.id; // 인증된 사용자 정보 가져오기
+        const likes = await getLikesByUserId(userId); // 서비스 함수 호출
+        res.status(200).json(likes); // 좋아요 항목 반환
+    } catch (error) {
+        console.error('Error fetching likes:', error);
+        res.status(500).json({ message: 'Error fetching likes' });
+    }
 };

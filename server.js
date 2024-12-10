@@ -10,7 +10,8 @@ import postRouter from "./post/postRouter.js";
 import guideRoutes from "./AI/guideRoutes.js";
 import signupRouter from "./signup/signupRouter.js";  // 추가된 회원가입 라우터
 import patchnoteRouter from "./patchNote/patchNotesRouter.js";  // 추가된 패치노트 라우터
-import commentRouter from "./comment/commentRouter.js"
+import commentRouter from "./comment/commentRouter.js";
+import mypageRouter from "./mypage/mypageRouter.js";
 import path from "path";
 
 // ES 모듈에서 __dirname을 사용하려면 아래와 같이 설정
@@ -46,6 +47,7 @@ app.use("/signup", signupRouter);  // /signup 경로로 회원가입 처리
 // 메인 페이지 및 채널 페이지 라우터 설정
 app.use("/main", mainPageRouter);
 app.use("/channel", channelPageRouter);
+app.use("/mypage", mypageRouter);
 
 // 게시물 라우터 설정
 app.use("/post", postRouter);

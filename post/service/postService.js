@@ -45,7 +45,7 @@ export const getPost = async (postId) => {
     if (rows.length === 0) {
       throw new Error('Post not found');
     }
-    return rows[0];
+    return rows[0]; // isAccurate 값도 포함된 게시글 반환
   } catch (error) {
     throw new Error('Error retrieving post: ' + error.message);
   }
@@ -88,6 +88,23 @@ export const getLikeCount = async (postId) => {
   }
 };
 
+// isAccurate 값 조회
+export const getIsAccurate = async (postId) => {
+  try {
+    console.log(`Fetching isAccurate for postId: ${postId}`);
+    const [rows] = await pool.query('SELECT isAccurate FROM posts WHERE postId = ?', [postId]);
+    if (rows.length === 0) {
+      console.error(`Post with postId ${postId} not found`);
+      throw new Error('Post not found');
+    }
+    console.log(`isAccurate value: ${rows[0].isAccurate}`);
+    return rows[0].isAccurate;
+  } catch (error) {
+    console.error('Error retrieving isAccurate:', error.message);
+    throw new Error('Error retrieving isAccurate: ' + error.message);
+  }
+};
+
 export default {
   getUserByNickname,
   createPost,
@@ -96,5 +113,6 @@ export default {
   deletePost,
   addLike,
   removeLike,
-  getLikeCount
+  getLikeCount,
+  getIsAccurate
 };
